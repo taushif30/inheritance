@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+ <nav>
+    <h1>INHERITANCE AND PROTOTYPE</h1>
+ </nav>
+ <hr><br>
+
+ <!-- ---------------------------------------------------------- -->
+
+ <h3>Q1- Create 2 objects - parent and child. Attach methods to parent and use those methods in child object using parents prototype?</h3><br>
+ <pre>
+ <b>ANS:</b>// Parent object constructor
+        function Parent(name) {
+        this.name = name;
+        }
+ 
+        // Method attached to the parent object
+        Parent.prototype.greet = function() {
+        console.log(`Hello, my name is ${this.name}`);
+        };
+ 
+        // Child object constructor
+        function Child(name, age) {
+        Parent.call(this, name);
+        this.age = age;
+        }
+ 
+        // Set up the prototype chain between the parent and child objects
+        Child.prototype = Object.create(Parent.prototype);
+        Child.prototype.constructor = Child;
+ 
+        // Create instances of the parent and child objects
+        var parent = new Parent("John");
+        var child = new Child("Sarah", 10);
+ 
+       // Use the methods defined in the parent object
+       parent.greet();  
+  
+       // Use the methods from the parent object's prototype in the child object
+       child.greet();   
+ 
+ <b>OUTPUT: </b>Hello, my name is John.
+           Hello, my name is Sarah  
+ </pre>
+
+ <br><hr><br>
+
+ <!-- ----------------------------------------------------------- -->
+ <h3>Q2-Write code to explain prototype chaining?</h3><br>
+ <pre>
+<b>ANS:</b>// Parent object constructor
+       function Parent(name) {
+       this.name = name;
+       }
+
+       // Method attached to the parent object
+       Parent.prototype.greet = function() {
+       console.log(`Hello, my name is ${this.name}`);
+       };
+
+       // Child object constructor
+       function Child(name, age) {
+       Parent.call(this, name);
+       this.age = age;
+       }
+
+       // Set up the prototype chain between the parent and child objects
+       Child.prototype = Object.create(Parent.prototype);
+       Child.prototype.constructor = Child;
+
+       // Method specific to the child object
+       Child.prototype.introduce = function() {
+       console.log(`Hi, I'm ${this.name} and I'm ${this.age} years old`);
+       };
+
+       // Create an instance of the child object
+       var child = new Child("Sarah", 10);
+
+       // Use the methods from the parent object's prototype in the child object
+       child.greet();    
+       child.introduce();
+
+<b>OUTPUT:</b>Hello, my name is Sarah
+          Hi, I'm Sarah and I'm 10 years old.
+ </pre>
+ <br><hr><br>
+ <!-- ------------------------------------------------------------ -->
+
+ <h3>Q3-Add a method to calculate sum of all elements in Array in array's protype, use that method to calculate sum for multiple arrays?</h3><br>
+ <pre>
+<b>ANS:</b>// Add a method to calculate the sum of all elements in the array
+      Array.prototype.sum = function() {
+      return this.reduce((acc, curr) => acc + curr, 0);
+      };
+
+      // Create multiple arrays
+      var array1 = [1, 2, 3, 4, 5];
+
+      // Calculate the sum using the added method
+      var sum1 = array1.sum();
+
+      console.log(sum1);  
+
+<b>OUTPUT:</b>15 (1 + 2 + 3 + 4 + 5)
+
+ </pre>
+ <br><hr><br>
+ <!-- ----------------------------------------------------------- -->
+ <h3>Q4-Write a JavaScript function to retrieve all the names of object's own and inherited properties?</h3><br>
+ <pre>
+<b>ANS:</b>function getAllPropertyNames(obj) {
+      var propertyNames = [];
+  
+      // Iterate over all properties in the object and its prototype chain
+      for (var prop in obj) {
+      propertyNames.push(prop);
+      }
+  
+      return propertyNames;
+      }
+  
+      // Example usage
+      var obj = {
+      name: "John",
+      age: 30
+      };
+  
+      var inheritedObj = Object.create(obj);
+      inheritedObj.job = "Engineer";
+  
+      var propertyNames = getAllPropertyNames(inheritedObj);
+  
+      console.log(propertyNames);
+
+<b>OUTPUT:</b>[ 'job', 'name', 'age' ]
+  
+ </pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>
